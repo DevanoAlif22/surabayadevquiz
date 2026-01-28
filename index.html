@@ -224,7 +224,8 @@
         margin-bottom: 20px;
       }
 
-      input[type="text"] {
+      input[type="text"],
+      input[type="password"] {
         flex: 1;
         padding: 15px;
         border: 2px solid #d1d5db;
@@ -233,7 +234,8 @@
         transition: border-color 0.3s;
       }
 
-      input[type="text"]:focus {
+      input[type="text"]:focus,
+      input[type="password"]:focus {
         outline: none;
         border-color: #10b981;
       }
@@ -411,6 +413,26 @@
       .cancel-button {
         background: #6b7280;
       }
+
+      .password-input-group {
+        margin-bottom: 20px;
+      }
+
+      .password-input-group input {
+        width: 100%;
+        margin-bottom: 10px;
+      }
+
+      .error-message {
+        color: #991b1b;
+        font-size: 0.9em;
+        margin-top: 10px;
+        display: none;
+      }
+
+      .error-message.show {
+        display: block;
+      }
     </style>
   </head>
   <body>
@@ -480,7 +502,7 @@
             Kembali ke Menu
           </button>
           <button class="reveal-button" onclick="showRevealModal()">
-            Lihat Semua Jawaban
+            🔒 Lihat Semua Jawaban
           </button>
         </div>
       </div>
@@ -507,26 +529,41 @@
       </div>
     </div>
 
-    <!-- Reveal Confirmation Modal -->
+    <!-- Reveal Confirmation Modal with Password -->
     <div id="revealModal" class="modal">
       <div class="modal-content">
-        <h3>⚠️ Yakin ingin melihat semua jawaban?</h3>
+        <h3>🔐 Password Admin Diperlukan</h3>
         <p>
-          Jika kamu melihat semua jawaban, permainan akan berakhir dan skormu
-          akan tetap <strong id="modalScore">0</strong>.
+          Untuk melihat semua jawaban, masukkan password admin. Permainan akan berakhir dan skor tetap <strong id="modalScore">0</strong>.
         </p>
+        
+        <div class="password-input-group">
+          <input
+            type="password"
+            id="adminPassword"
+            placeholder="Masukkan password admin..."
+            autocomplete="off"
+          />
+          <div class="error-message" id="passwordError">
+            ❌ Password salah! Silakan coba lagi.
+          </div>
+        </div>
+
         <div class="modal-buttons">
           <button class="cancel-button" onclick="closeRevealModal()">
             Batal
           </button>
-          <button class="reveal-button" onclick="revealAllAnswers()">
-            Ya, Lihat Jawaban
+          <button class="reveal-button" onclick="verifyAndReveal()">
+            Verifikasi & Lihat
           </button>
         </div>
       </div>
     </div>
 
     <script>
+      // Password admin (bisa diganti sesuai kebutuhan)
+      const ADMIN_PASSWORD = "hanyaadminyangtahu";
+
       const questions = [
         {
           id: 1,
@@ -743,16 +780,47 @@
 
       function showRevealModal() {
         document.getElementById("modalScore").textContent = score;
+        document.getElementById("adminPassword").value = "";
+        document.getElementById("passwordError").classList.remove("show");
         document.getElementById("revealModal").classList.add("show");
+        
+        // Focus on password input
+        setTimeout(() => {
+          document.getElementById("adminPassword").focus();
+        }, 100);
       }
 
       function closeRevealModal() {
         document.getElementById("revealModal").classList.remove("show");
+        document.getElementById("adminPassword").value = "";
+        document.getElementById("passwordError").classList.remove("show");
+      }
+
+      function verifyAndReveal() {
+        const passwordInput = document.getElementById("adminPassword");
+        const enteredPassword = passwordInput.value;
+        const errorMessage = document.getElementById("passwordError");
+
+        if (enteredPassword === ADMIN_PASSWORD) {
+          // Password benar, lanjutkan reveal
+          errorMessage.classList.remove("show");
+          closeRevealModal();
+          revealAllAnswers();
+        } else {
+          // Password salah, tampilkan error
+          errorMessage.classList.add("show");
+          passwordInput.value = "";
+          passwordInput.focus();
+          
+          // Shake animation
+          passwordInput.style.animation = "shake 0.5s";
+          setTimeout(() => {
+            passwordInput.style.animation = "";
+          }, 500);
+        }
       }
 
       function revealAllAnswers() {
-        closeRevealModal();
-
         // Reveal all answers one by one with animation
         let delay = 0;
         revealedAnswers.forEach((revealed, index) => {
@@ -1018,6 +1086,15 @@
             }
           });
 
+        // Enter key on password field
+        document
+          .getElementById("adminPassword")
+          .addEventListener("keypress", (e) => {
+            if (e.key === "Enter") {
+              verifyAndReveal();
+            }
+          });
+
         // Close modal when clicking outside
         document
           .getElementById("revealModal")
@@ -1027,6 +1104,17 @@
             }
           });
       });
+
+      // Add shake animation for wrong password
+      const style = document.createElement('style');
+      style.textContent = `
+        @keyframes shake {
+          0%, 100% { transform: translateX(0); }
+          10%, 30%, 50%, 70%, 90% { transform: translateX(-10px); }
+          20%, 40%, 60%, 80% { transform: translateX(10px); }
+        }
+      `;
+      document.head.appendChild(style);
     </script>
   </body>
 </html>
