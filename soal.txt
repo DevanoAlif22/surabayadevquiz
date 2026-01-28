@@ -7,7 +7,7 @@ Express.js
 Next.js
 
 
-2. 5 content creator IT Indonesia dengan followers/subscriber terbanyak :
+2. 5 channel youtube IT Indonesia dengan followers/subscriber terbanyak :
 
 Web Programming UNPAS
 Programmer Zaman Now
@@ -61,7 +61,7 @@ Chrome
 AWS
 Google Cloud
 Vercel
-Niagahoster
+Github
 DigitalOcean
 
 9. 5 alasan developer Indonesia begadang ngerjain coding :
