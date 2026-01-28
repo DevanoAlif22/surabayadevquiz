@@ -1,0 +1,1026 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Family 100 - SurabayaDev Edition</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        min-height: 100vh;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 900px;
+        margin: 0 auto;
+      }
+
+      .header {
+        text-align: center;
+        color: white;
+        margin-bottom: 30px;
+      }
+
+      .logo-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 15px;
+        margin-bottom: 20px;
+      }
+
+      .logo {
+        background: white;
+        padding: 10px;
+        border-radius: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2em;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      }
+
+      .header h1 {
+        font-size: 2.5em;
+        text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+        margin-bottom: 5px;
+      }
+
+      .header .subtitle {
+        font-size: 1.5em;
+        font-weight: bold;
+        color: #fbbf24;
+        margin-bottom: 10px;
+      }
+
+      .header p {
+        font-size: 1.1em;
+        opacity: 0.95;
+      }
+
+      .screen {
+        display: none;
+        background: white;
+        border-radius: 20px;
+        padding: 40px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      }
+
+      .screen.active {
+        display: block;
+        animation: slideIn 0.3s ease-out;
+      }
+
+      @keyframes slideIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .question-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 15px;
+      }
+
+      .question-card {
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        color: white;
+        padding: 25px;
+        border-radius: 15px;
+        cursor: pointer;
+        transition:
+          transform 0.2s,
+          box-shadow 0.2s;
+        text-align: center;
+      }
+
+      .question-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+      }
+
+      .question-card h3 {
+        font-size: 1.1em;
+        margin-bottom: 10px;
+      }
+
+      .question-card p {
+        font-size: 0.9em;
+        opacity: 0.9;
+      }
+
+      .game-header {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+
+      .question-title {
+        font-size: 1.5em;
+        color: #059669;
+        margin-bottom: 20px;
+        font-weight: bold;
+      }
+
+      .lives {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+
+      .life {
+        width: 40px;
+        height: 40px;
+        background: #ff4757;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.5em;
+        transition: all 0.3s;
+      }
+
+      .life.lost {
+        background: #ddd;
+        opacity: 0.3;
+      }
+
+      .score {
+        text-align: center;
+        font-size: 1.3em;
+        color: #059669;
+        font-weight: bold;
+        margin-bottom: 20px;
+      }
+
+      .answers-grid {
+        display: grid;
+        gap: 10px;
+        margin-bottom: 30px;
+      }
+
+      .answer-slot {
+        background: #f3f4f6;
+        padding: 15px 20px;
+        border-radius: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: all 0.3s;
+        border: 2px solid #e5e7eb;
+      }
+
+      .answer-slot.revealed {
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        color: white;
+        border-color: #059669;
+        animation: reveal 0.5s ease-out;
+      }
+
+      @keyframes reveal {
+        0% {
+          transform: rotateY(90deg);
+        }
+        100% {
+          transform: rotateY(0deg);
+        }
+      }
+
+      .answer-number {
+        font-weight: bold;
+        margin-right: 15px;
+        font-size: 1.1em;
+      }
+
+      .answer-text {
+        flex: 1;
+        font-size: 1.05em;
+      }
+
+      .answer-points {
+        font-weight: bold;
+        color: #fbbf24;
+        font-size: 1.1em;
+      }
+
+      .input-section {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+
+      input[type="text"] {
+        flex: 1;
+        padding: 15px;
+        border: 2px solid #d1d5db;
+        border-radius: 10px;
+        font-size: 1em;
+        transition: border-color 0.3s;
+      }
+
+      input[type="text"]:focus {
+        outline: none;
+        border-color: #10b981;
+      }
+
+      button {
+        padding: 15px 30px;
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        color: white;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        font-size: 1em;
+        font-weight: bold;
+        transition: transform 0.2s;
+      }
+
+      button:hover {
+        transform: scale(1.05);
+      }
+
+      button:active {
+        transform: scale(0.95);
+      }
+
+      .message {
+        text-align: center;
+        padding: 15px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        font-weight: bold;
+        display: none;
+      }
+
+      .message.show {
+        display: block;
+        animation: fadeIn 0.3s;
+      }
+
+      .message.correct {
+        background: #d1fae5;
+        color: #065f46;
+      }
+
+      .message.wrong {
+        background: #fee2e2;
+        color: #991b1b;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      .back-button {
+        background: #6b7280;
+        margin-top: 20px;
+      }
+
+      .reveal-button {
+        background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+      }
+
+      .button-group {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+
+      .button-group button {
+        flex: 1;
+        margin-top: 0;
+      }
+
+      .final-screen {
+        text-align: center;
+      }
+
+      .final-screen h2 {
+        font-size: 2.5em;
+        color: #059669;
+        margin-bottom: 20px;
+      }
+
+      .final-screen .final-score {
+        font-size: 3em;
+        color: #10b981;
+        margin-bottom: 30px;
+        font-weight: bold;
+      }
+
+      .branding {
+        text-align: center;
+        margin-top: 30px;
+        padding-top: 20px;
+        border-top: 2px solid #e5e7eb;
+        color: #6b7280;
+        font-size: 0.9em;
+      }
+
+      .branding a {
+        color: #10b981;
+        text-decoration: none;
+        font-weight: bold;
+      }
+
+      .branding a:hover {
+        text-decoration: underline;
+      }
+
+      .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.7);
+        z-index: 1000;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .modal.show {
+        display: flex;
+      }
+
+      .modal-content {
+        background: white;
+        padding: 30px;
+        border-radius: 15px;
+        max-width: 500px;
+        width: 90%;
+        text-align: center;
+        animation: modalSlideIn 0.3s ease-out;
+      }
+
+      @keyframes modalSlideIn {
+        from {
+          opacity: 0;
+          transform: scale(0.9);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      .modal-content h3 {
+        color: #059669;
+        margin-bottom: 20px;
+        font-size: 1.5em;
+      }
+
+      .modal-content p {
+        color: #666;
+        margin-bottom: 20px;
+        line-height: 1.6;
+      }
+
+      .modal-buttons {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+      }
+
+      .modal-buttons button {
+        flex: 1;
+        max-width: 150px;
+      }
+
+      .cancel-button {
+        background: #6b7280;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <div class="logo-container">
+          <div class="logo">
+            <img src="image.webp" style="width: 200px" alt="" />
+          </div>
+        </div>
+        <h1>Family 100</h1>
+        <div class="subtitle">SurabayaDev Edition</div>
+        <p>Komunitas IT Arek Surabaya</p>
+      </div>
+
+      <!-- Home Screen -->
+      <div id="homeScreen" class="screen active">
+        <h2
+          style="
+            text-align: center;
+            margin-bottom: 30px;
+            color: #059669;
+            font-size: 1.8em;
+          "
+        >
+          Pilih Pertanyaan
+        </h2>
+        <div class="question-list" id="questionList"></div>
+
+        <div class="branding">
+          Powered by
+          <a href="https://surabayadev.org" target="_blank">SurabayaDev</a> -
+          Komunitas Developer Surabaya
+        </div>
+      </div>
+
+      <!-- Game Screen -->
+      <div id="gameScreen" class="screen">
+        <div class="game-header">
+          <h2 class="question-title" id="currentQuestion"></h2>
+          <div class="lives" id="livesContainer"></div>
+          <div class="score" id="scoreDisplay">Skor: 0</div>
+        </div>
+
+        <div class="message" id="messageBox"></div>
+
+        <div class="answers-grid" id="answersGrid"></div>
+
+        <div class="input-section">
+          <input
+            type="text"
+            id="answerInput"
+            placeholder="Ketik jawaban kamu..."
+            autocomplete="off"
+          />
+          <button onclick="submitAnswer()">Jawab</button>
+        </div>
+
+        <div class="button-group">
+          <button class="back-button" onclick="backToHome()">
+            Kembali ke Menu
+          </button>
+          <button class="reveal-button" onclick="showRevealModal()">
+            Lihat Semua Jawaban
+          </button>
+        </div>
+      </div>
+
+      <!-- Final Screen -->
+      <div id="finalScreen" class="screen">
+        <div class="final-screen">
+          <h2 id="finalTitle">Game Selesai!</h2>
+          <div class="final-score" id="finalScore">0</div>
+          <p
+            style="font-size: 1.2em; color: #666; margin-bottom: 30px"
+            id="finalMessage"
+          ></p>
+          <button onclick="backToHome()">Main Lagi</button>
+
+          <div class="branding">
+            Tertarik bergabung dengan SurabayaDev?<br />
+            Kunjungi
+            <a href="https://surabayadev.org" target="_blank"
+              >surabayadev.org</a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Reveal Confirmation Modal -->
+    <div id="revealModal" class="modal">
+      <div class="modal-content">
+        <h3>⚠️ Yakin ingin melihat semua jawaban?</h3>
+        <p>
+          Jika kamu melihat semua jawaban, permainan akan berakhir dan skormu
+          akan tetap <strong id="modalScore">0</strong>.
+        </p>
+        <div class="modal-buttons">
+          <button class="cancel-button" onclick="closeRevealModal()">
+            Batal
+          </button>
+          <button class="reveal-button" onclick="revealAllAnswers()">
+            Ya, Lihat Jawaban
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const questions = [
+        {
+          id: 1,
+          question:
+            "5 framework bahasa pemrograman yang paling sering dipakai developer Indonesia",
+          answers: [
+            { text: "Laravel", points: 25 },
+            { text: "React", points: 20 },
+            { text: "CodeIgniter", points: 18 },
+            { text: "Express.js", points: 15 },
+            { text: "Next.js", points: 12 },
+          ],
+        },
+        {
+          id: 2,
+          question:
+            "5 content creator IT Indonesia dengan followers/subscriber terbanyak",
+          answers: [
+            { text: "Web Programming UNPAS", points: 30 },
+            { text: "Programmer Zaman Now", points: 25 },
+            { text: "Dea Afrizal", points: 20 },
+            { text: "Kelas Terbuka", points: 15 },
+            { text: "Parsinta", points: 10 },
+          ],
+        },
+        {
+          id: 3,
+          question: "5 bahasa pemrograman paling populer di Indonesia",
+          answers: [
+            { text: "JavaScript", points: 30 },
+            { text: "PHP", points: 25 },
+            { text: "Python", points: 20 },
+            { text: "Java", points: 15 },
+            { text: "Go", points: 10 },
+          ],
+        },
+        {
+          id: 4,
+          question:
+            "5 platform belajar coding online yang paling sering dipakai di Indonesia",
+          answers: [
+            { text: "YouTube", points: 30 },
+            { text: "Dicoding", points: 25 },
+            { text: "Udemy", points: 20 },
+            { text: "Progate", points: 15 },
+            { text: "BuildWithAngga", points: 10 },
+          ],
+        },
+        {
+          id: 5,
+          question:
+            "5 database yang paling sering digunakan di proyek Indonesia",
+          answers: [
+            { text: "MySQL", points: 30 },
+            { text: "PostgreSQL", points: 25 },
+            { text: "MongoDB", points: 20 },
+            { text: "SQLite", points: 15 },
+            { text: "SQL Server", points: 10 },
+          ],
+        },
+        {
+          id: 6,
+          question:
+            "5 role IT yang paling sering muncul di lowongan kerja Indonesia",
+          answers: [
+            { text: "Backend Developer", points: 25 },
+            { text: "Frontend Developer", points: 22 },
+            { text: "Fullstack Developer", points: 20 },
+            { text: "Data Analyst", points: 18 },
+            { text: "Mobile Developer", points: 15 },
+          ],
+        },
+        {
+          id: 7,
+          question:
+            "5 tools yang hampir pasti ada di laptop programmer Indonesia",
+          answers: [
+            { text: "VS Code", points: 30 },
+            { text: "Git", points: 25 },
+            { text: "XAMPP / Laragon", points: 20 },
+            { text: "Postman", points: 15 },
+            { text: "Chrome", points: 10 },
+          ],
+        },
+        {
+          id: 8,
+          question:
+            "5 platform cloud / hosting yang sering dipakai di Indonesia",
+          answers: [
+            { text: "AWS", points: 25 },
+            { text: "Google Cloud", points: 22 },
+            { text: "Vercel", points: 20 },
+            { text: "Niagahoster", points: 18 },
+            { text: "DigitalOcean", points: 15 },
+          ],
+        },
+        {
+          id: 9,
+          question: "5 alasan developer Indonesia begadang ngerjain coding",
+          answers: [
+            { text: "Deadline", points: 30 },
+            { text: "Bug", points: 25 },
+            { text: "Revisi", points: 20 },
+            { text: "Nanggung", points: 15 },
+            { text: "Deploy malam", points: 10 },
+          ],
+        },
+        {
+          id: 10,
+          question: "5 komunitas IT / developer Indonesia yang cukup dikenal",
+          answers: [
+            { text: "SurabayaDev", points: 25 },
+            { text: "ID-DevOps", points: 22 },
+            { text: "Indonesia Belajar", points: 20 },
+            { text: "PHP Indonesia", points: 18 },
+            { text: "Golang Indonesia", points: 15 },
+          ],
+        },
+        {
+          id: 11,
+          question: "5 Divisi yang ada di SurabayaDev",
+          answers: [
+            { text: "Sosmed dan Design", points: 25 },
+            { text: "Event Management", points: 22 },
+            { text: "Public Relation", points: 20 },
+            { text: "Developer", points: 18 },
+            { text: "Logistik", points: 15 },
+          ],
+        },
+        {
+          id: 12,
+          question: "5 Speaker Re:Code hari ini",
+          answers: [
+            { text: "Sandhika Galih", points: 25 },
+            { text: "Eko Khannedy", points: 22 },
+            { text: "Setia Budi", points: 20 },
+            { text: "Theodore Mangowal", points: 18 },
+            { text: "Safira Maruapey", points: 15 },
+          ],
+        },
+      ];
+
+      let currentQuestionData = null;
+      let revealedAnswers = [];
+      let lives = 3;
+      let score = 0;
+
+      function initHome() {
+        const questionList = document.getElementById("questionList");
+        questionList.innerHTML = "";
+
+        questions.forEach((q, index) => {
+          const card = document.createElement("div");
+          card.className = "question-card";
+          card.innerHTML = `
+                    <h3>Pertanyaan ${index + 1}</h3>
+                    <p>${q.question}</p>
+                `;
+          card.onclick = () => startGame(q);
+          questionList.appendChild(card);
+        });
+      }
+
+      function startGame(questionData) {
+        currentQuestionData = questionData;
+        revealedAnswers = new Array(questionData.answers.length).fill(false);
+        lives = 3;
+        score = 0;
+
+        document.getElementById("homeScreen").classList.remove("active");
+        document.getElementById("gameScreen").classList.add("active");
+
+        document.getElementById("currentQuestion").textContent =
+          questionData.question;
+        updateLives();
+        updateScore();
+        renderAnswers();
+        document.getElementById("answerInput").value = "";
+        document.getElementById("answerInput").focus();
+        hideMessage();
+      }
+
+      function updateLives() {
+        const container = document.getElementById("livesContainer");
+        container.innerHTML = "";
+        for (let i = 0; i < 3; i++) {
+          const life = document.createElement("div");
+          life.className = "life" + (i >= lives ? " lost" : "");
+          life.textContent = "❤️";
+          container.appendChild(life);
+        }
+      }
+
+      function updateScore() {
+        document.getElementById("scoreDisplay").textContent = `Skor: ${score}`;
+      }
+
+      function renderAnswers() {
+        const grid = document.getElementById("answersGrid");
+        grid.innerHTML = "";
+
+        currentQuestionData.answers.forEach((answer, index) => {
+          const slot = document.createElement("div");
+          slot.className =
+            "answer-slot" + (revealedAnswers[index] ? " revealed" : "");
+          slot.innerHTML = `
+                    <span class="answer-number">${index + 1}</span>
+                    <span class="answer-text">${revealedAnswers[index] ? answer.text : "???"}</span>
+                    <span class="answer-points">${revealedAnswers[index] ? answer.points : "?"}</span>
+                `;
+          grid.appendChild(slot);
+        });
+      }
+
+      function showRevealModal() {
+        document.getElementById("modalScore").textContent = score;
+        document.getElementById("revealModal").classList.add("show");
+      }
+
+      function closeRevealModal() {
+        document.getElementById("revealModal").classList.remove("show");
+      }
+
+      function revealAllAnswers() {
+        closeRevealModal();
+
+        // Reveal all answers one by one with animation
+        let delay = 0;
+        revealedAnswers.forEach((revealed, index) => {
+          if (!revealed) {
+            setTimeout(() => {
+              revealedAnswers[index] = true;
+              renderAnswers();
+            }, delay);
+            delay += 300;
+          }
+        });
+
+        // Show message after all revealed
+        setTimeout(() => {
+          showMessage(
+            "Semua jawaban telah terungkap! Skor tetap: " + score,
+            "correct",
+          );
+        }, delay + 500);
+      }
+
+      async function submitAnswer() {
+        const input = document.getElementById("answerInput");
+        const userAnswer = input.value.trim();
+
+        if (!userAnswer) {
+          showMessage("Masukkan jawaban dulu!", "wrong");
+          return;
+        }
+
+        const result = await checkAnswerWithAI(userAnswer);
+
+        if (result.isCorrect) {
+          const answerIndex = result.matchedIndex;
+          if (!revealedAnswers[answerIndex]) {
+            revealedAnswers[answerIndex] = true;
+            score += currentQuestionData.answers[answerIndex].points;
+            renderAnswers();
+            updateScore();
+            showMessage(
+              `Benar! +${currentQuestionData.answers[answerIndex].points} poin`,
+              "correct",
+            );
+            input.value = "";
+
+            if (revealedAnswers.every((r) => r)) {
+              setTimeout(() => {
+                endGame(true);
+              }, 1500);
+            }
+          } else {
+            showMessage("Jawaban sudah terbuka!", "wrong");
+          }
+        } else {
+          lives--;
+          updateLives();
+          showMessage("Jawaban salah! ❌", "wrong");
+          input.value = "";
+
+          if (lives === 0) {
+            setTimeout(() => {
+              endGame(false);
+            }, 1500);
+          }
+        }
+      }
+
+      function levenshteinDistance(str1, str2) {
+        const len1 = str1.length;
+        const len2 = str2.length;
+        const matrix = [];
+
+        for (let i = 0; i <= len1; i++) {
+          matrix[i] = [i];
+        }
+
+        for (let j = 0; j <= len2; j++) {
+          matrix[0][j] = j;
+        }
+
+        for (let i = 1; i <= len1; i++) {
+          for (let j = 1; j <= len2; j++) {
+            if (str1[i - 1] === str2[j - 1]) {
+              matrix[i][j] = matrix[i - 1][j - 1];
+            } else {
+              matrix[i][j] = Math.min(
+                matrix[i - 1][j - 1] + 1,
+                matrix[i][j - 1] + 1,
+                matrix[i - 1][j] + 1,
+              );
+            }
+          }
+        }
+
+        return matrix[len1][len2];
+      }
+
+      function normalizeString(str) {
+        return str
+          .toLowerCase()
+          .replace(/[^\w\s]/g, "")
+          .replace(/\s+/g, " ")
+          .trim();
+      }
+
+      function calculateSimilarity(str1, str2) {
+        const normalized1 = normalizeString(str1);
+        const normalized2 = normalizeString(str2);
+
+        const distance = levenshteinDistance(normalized1, normalized2);
+        const maxLength = Math.max(normalized1.length, normalized2.length);
+
+        if (maxLength === 0) return 1.0;
+
+        return 1 - distance / maxLength;
+      }
+
+      const abbreviationMap = {
+        js: "javascript",
+        ts: "typescript",
+        py: "python",
+        sql: "mysql",
+        postgres: "postgresql",
+        mongo: "mongodb",
+        react: "react",
+        vue: "vue.js",
+        express: "express.js",
+        next: "next.js",
+        vscode: "vs code",
+        xampp: "xampp",
+        laragon: "xampp / laragon",
+        aws: "aws",
+        gcp: "google cloud",
+        do: "digitalocean",
+      };
+
+      async function checkAnswerWithAI(userAnswer) {
+        const correctAnswers = currentQuestionData.answers.map((a) => a.text);
+
+        let expandedUserAnswer = userAnswer.toLowerCase();
+        for (let [abbr, full] of Object.entries(abbreviationMap)) {
+          const regex = new RegExp(`\\b${abbr}\\b`, "gi");
+          expandedUserAnswer = expandedUserAnswer.replace(regex, full);
+        }
+
+        let bestMatch = -1;
+        let bestScore = 0;
+        const threshold = 0.75;
+
+        for (let i = 0; i < correctAnswers.length; i++) {
+          const correctAnswer = correctAnswers[i];
+
+          if (normalizeString(userAnswer) === normalizeString(correctAnswer)) {
+            return { isCorrect: true, matchedIndex: i, reason: "Exact match" };
+          }
+
+          if (
+            normalizeString(expandedUserAnswer) ===
+            normalizeString(correctAnswer)
+          ) {
+            return {
+              isCorrect: true,
+              matchedIndex: i,
+              reason: "Abbreviation match",
+            };
+          }
+
+          const similarity = calculateSimilarity(
+            expandedUserAnswer,
+            correctAnswer,
+          );
+
+          const userNorm = normalizeString(expandedUserAnswer);
+          const correctNorm = normalizeString(correctAnswer);
+
+          if (
+            userNorm.includes(correctNorm) ||
+            correctNorm.includes(userNorm)
+          ) {
+            const lengthRatio =
+              Math.min(userNorm.length, correctNorm.length) /
+              Math.max(userNorm.length, correctNorm.length);
+
+            if (lengthRatio > 0.6) {
+              return {
+                isCorrect: true,
+                matchedIndex: i,
+                reason: "Substring match",
+              };
+            }
+          }
+
+          if (similarity > bestScore) {
+            bestScore = similarity;
+            bestMatch = i;
+          }
+        }
+
+        if (bestScore >= threshold) {
+          return {
+            isCorrect: true,
+            matchedIndex: bestMatch,
+            reason: `Fuzzy match (${Math.round(bestScore * 100)}% similar)`,
+          };
+        }
+
+        return {
+          isCorrect: false,
+          matchedIndex: -1,
+          reason: `No match found (best: ${Math.round(bestScore * 100)}%)`,
+        };
+      }
+
+      function showMessage(text, type) {
+        const msg = document.getElementById("messageBox");
+        msg.textContent = text;
+        msg.className = "message show " + type;
+        setTimeout(() => hideMessage(), 3000);
+      }
+
+      function hideMessage() {
+        const msg = document.getElementById("messageBox");
+        msg.classList.remove("show");
+      }
+
+      function endGame(won, revealed = false) {
+        document.getElementById("gameScreen").classList.remove("active");
+        document.getElementById("finalScreen").classList.add("active");
+
+        if (won) {
+          document.getElementById("finalTitle").textContent = "🎉 Selamat!";
+          document.getElementById("finalMessage").textContent =
+            "Kamu berhasil menjawab semua pertanyaan!";
+        } else if (revealed) {
+          document.getElementById("finalTitle").textContent =
+            "📋 Jawaban Terungkap";
+          document.getElementById("finalMessage").textContent =
+            "Semua jawaban sudah terlihat. Coba tantang dirimu lagi!";
+        } else {
+          document.getElementById("finalTitle").textContent = "😢 Game Over";
+          document.getElementById("finalMessage").textContent =
+            "Nyawa habis! Coba lagi yuk!";
+        }
+
+        document.getElementById("finalScore").textContent = score;
+      }
+
+      function backToHome() {
+        document.getElementById("gameScreen").classList.remove("active");
+        document.getElementById("finalScreen").classList.remove("active");
+        document.getElementById("homeScreen").classList.add("active");
+        closeRevealModal();
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        initHome();
+
+        document
+          .getElementById("answerInput")
+          .addEventListener("keypress", (e) => {
+            if (e.key === "Enter") {
+              submitAnswer();
+            }
+          });
+
+        // Close modal when clicking outside
+        document
+          .getElementById("revealModal")
+          .addEventListener("click", (e) => {
+            if (e.target.id === "revealModal") {
+              closeRevealModal();
+            }
+          });
+      });
+    </script>
+  </body>
+</html>
