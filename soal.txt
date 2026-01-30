@@ -1,86 +1,104 @@
-1. 5 framework bahasa pemrograman yang paling sering dipakai developer Indonesia :
+1. 5 framework / library bahasa pemrograman yang paling sering dipakai developer Indonesia
+- Laravel
+- React
+- CodeIgniter
+- Express.js
+- Next.js
 
-Laravel
-React
-CodeIgniter
-Express.js
-Next.js
+2. 5 Channel YouTube IT Indonesia dengan followers / subscriber terbanyak
+- Web Programming UNPAS
+- Programmer Zaman Now
+- Dea Afrizal
+- Kelas Terbuka
+- Parsinta
 
+3. 5 bahasa pemrograman paling populer di Indonesia
+- JavaScript
+- PHP
+- Python
+- Java
+- Go
 
-2. 5 channel youtube IT Indonesia dengan followers/subscriber terbanyak :
+4. 5 platform belajar coding online yang paling sering dipakai di Indonesia
+- YouTube
+- Dicoding
+- Udemy
+- Progate
+- BuildWithAngga
 
-Web Programming UNPAS
-Programmer Zaman Now
-Dea Afrizal
-Kelas Terbuka
-Parsinta
+5. 5 database yang paling sering digunakan di proyek Indonesia
+- MySQL
+- PostgreSQL
+- MongoDB
+- SQLite
+- Redis
 
-3. 5 bahasa pemrograman paling populer di Indonesia :
+6. 5 role IT yang paling sering muncul di lowongan kerja Indonesia
+- Backend Developer
+- Frontend Developer
+- Fullstack Developer
+- Data Analyst
+- Mobile Developer
 
-JavaScript
-PHP
-Python
-Java
-Go
+7. 5 tools yang hampir pasti ada di laptop programmer Indonesia
+- VS Code
+- Git
+- XAMPP / Laragon
+- Postman
+- Chrome
 
-4. 5 platform belajar coding online yang paling sering dipakai di Indonesia :
+8. 5 platform cloud / hosting yang sering dipakai di Indonesia
+- AWS
+- Google Cloud
+- Vercel
+- Github
+- DigitalOcean
 
-YouTube
-Dicoding
-Udemy
-Progate
-BuildWithAngga
+9. 5 alasan developer Indonesia begadang ngerjain coding
+- Deadline
+- Bug
+- Revisi
+- Nanggung
+- Deploy
 
-5. 5 database yang paling sering digunakan di proyek Indonesia :
+10. 5 komunitas IT / developer Indonesia yang cukup dikenal
+- SurabayaDev
+- GDG Surabaya
+- Flutter Indonesia
+- PHP Indonesia
+- Golang Indonesia
 
-MySQL
-PostgreSQL
-MongoDB
-SQLite
-SQL Server
+11. 5 Divisi yang ada di SurabayaDev
+- Sosmed dan Design
+- Event Management
+- Public Relation
+- Developer
+- Logistik
 
-6. 5 role IT yang paling sering muncul di lowongan kerja Indonesia :
+12. 5 Speaker Re:Code hari ini
+- Sandhika Galih
+- Eko Khannedy
+- Setia Budi
+- Theodore Mangowal
+- Safira Maruapey
 
-Backend Developer
-Frontend Developer
-Fullstack Developer
-Data Analyst
-Mobile Developer
+13. 5 hal yang bikin Surabaya dikenal sebagai kota yang ramah teknologi
+- Digitalisasi
+- SmartCity
+- Inovasi
+- Startup
+- Komunitas
 
-7. 5 tools yang hampir pasti ada di laptop programmer Indonesia :
+14. 5 hal penting dalam pengembangan ekosistem digital di Indonesia
+- Literasi
+- Regulasi
+- Keamanan
+- Infrastruktur
+- Kolaborasi
 
-VS Code
-Git
-XAMPP / Laragon
-Postman
-Chrome
-
-
-8. 5 platform cloud / hosting yang sering dipakai di Indonesia :
-
-AWS
-Google Cloud
-Vercel
-Github
-DigitalOcean
-
-9. 5 alasan developer Indonesia begadang ngerjain coding :
-
-Deadline mepet
-Bug muncul tengah malam
-Revisi dadakan dari klien / atasan
-“Dikit lagi kelar” tapi nggak kelar-kelar
-Deploy malam biar server sepi
-
-10. 5 komunitas IT / developer Indonesia yang cukup dikenal :
-
-SurabayaDev
-ID-DevOps
-Indonesia Belajar
-PHP Indonesia
-Golang Indonesia
-
-https://surabayadev.org/
-
-aku ingin membuat kayak family 100 gitu jadi nanti di halaman pertama bisa milih pertanyaan
-terus misal milih nomor 10 nanti orangnya bisa jawab tapi aku bingungnya ini nanti di input manual gitu teks nya tapi kan bisa aja ga sama misal jawabannya SurabayaDev nanti orang input Surabaya Dev kan salah dan nanti ada 3 nyawa.
+15. 5 hal yang bikin anak muda betah di dunia IT
+- Gaji
+- WFH
+- Kopi
+- Koneksi
+- Event
